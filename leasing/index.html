@@ -94,7 +94,7 @@ input{font:inherit}
   position:sticky; top:0; z-index:30;
   background:color-mix(in srgb, var(--fs-paper) 90%, transparent);
   backdrop-filter:blur(12px); border-bottom:1px solid var(--fs-border);
-  padding:20px 0 18px; margin-bottom:clamp(32px,5vh,56px);
+  padding:20px 0 18px; margin-bottom:56px;
   font-family:var(--fs-font);
 }
 .searchrow{display:flex; align-items:center; gap:18px; flex-wrap:wrap}
@@ -131,7 +131,7 @@ input{font:inherit}
 .chip[aria-pressed="true"]{background:var(--fs-blue); border-color:var(--fs-blue); color:#fff}
 .chip.reset{border-style:dashed; color:var(--fs-blue); border-color:color-mix(in srgb,var(--fs-blue) 40%,transparent); background:transparent}
 
-.section{margin-bottom:clamp(46px,7vh,84px); font-family:var(--fs-font)}
+.section{margin-bottom:84px; font-family:var(--fs-font)}
 .section[hidden]{display:none}
 .shead{
   display:flex; align-items:baseline; gap:16px;
@@ -207,13 +207,13 @@ input{font:inherit}
 .card.nolink:hover .go.dead{color:var(--fs-ink-faint)}
 
 .empty{
-  text-align:center; padding:clamp(60px,12vh,120px) 20px;
+  text-align:center; padding:120px 20px;
   border:1px dashed var(--fs-border); border-radius:var(--fs-radius); font-family:var(--fs-font);
 }
 .empty p{font-weight:700; font-size:20px; letter-spacing:.03em; text-transform:uppercase; color:var(--fs-blue); margin-bottom:8px}
 .empty small{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--fs-ink-faint)}
 
-footer{background:var(--ink); color:rgba(255,255,255,.62); margin-top:clamp(50px,9vh,110px); padding:44px 0 38px}
+footer{background:var(--ink); color:rgba(255,255,255,.62); margin-top:110px; padding:44px 0 38px}
 .fin{max-width:var(--maxw); margin:0 auto; padding:0 var(--gut); display:flex; align-items:center; gap:30px; flex-wrap:wrap}
 footer img{height:22px; width:auto}
 footer .fnav{display:flex; gap:22px; margin-left:auto; flex-wrap:wrap}
