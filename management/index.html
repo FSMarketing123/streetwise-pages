@@ -281,6 +281,10 @@ footer small{font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; wid
 .sbtn:hover{border-color:var(--fs-teal); background:var(--fs-blue); color:#fff}
 .sbtn:disabled{opacity:.35; pointer-events:none}
 @media (max-width:700px){ .grid{grid-auto-columns:62vw; grid-template-columns:none} .snav{display:none} }
+/* ── Compact spacing so the page fits its fixed-height Wix block ── */
+.section{margin-bottom:64px}
+.section:last-child{margin-bottom:24px}
+@media (max-width:700px){ .section{margin-bottom:48px} .section:last-child{margin-bottom:16px} .controls{margin-bottom:24px} .shead{margin-bottom:18px} }
 </style>
 </head>
 <body>
@@ -439,7 +443,7 @@ fetch("items.json", {cache: "no-cache"})
       `<div class="empty"><p>Couldn't load packages.</p><small>Refresh the page to try again</small></div>`;
   });
 </script>
-<footer style="margin-top:80px; padding:40px 0; border-top:1px solid var(--fs-border); text-align:center; font-family:var(--fs-font); font-size:13px; color:var(--fs-ink-soft)">
+<footer style="margin-top:24px; padding:20px 0; border-top:1px solid var(--fs-border); text-align:center; font-family:var(--fs-font); font-size:13px; color:var(--fs-ink-soft)">
 Designed by Anna Myers
 </footer>
 </body>

@@ -247,6 +247,10 @@ footer small{font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; wid
 .sbtn:hover{border-color:var(--fs-teal); background:var(--fs-blue); color:#fff}
 .sbtn:disabled{opacity:.35; pointer-events:none}
 @media (max-width:700px){ .grid{grid-auto-columns:62vw; grid-template-columns:none} .snav{display:none} }
+/* ── Compact spacing so the page fits its fixed-height Wix block ── */
+.section{margin-bottom:64px}
+.section:last-child{margin-bottom:24px}
+@media (max-width:700px){ .section{margin-bottom:48px} .section:last-child{margin-bottom:16px} .controls{margin-bottom:24px} .shead{margin-bottom:18px} }
 </style>
 </head>
 <body>
