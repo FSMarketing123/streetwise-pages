@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StreetWise · Insurance Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,700&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ════════════════════════════════════════════════════════════════════
+   1 · BRAND TOKENS   ← the only block you should need to edit for brand
+   Swap --accent for Franklin Street's exact red and you're done.
+   ════════════════════════════════════════════════════════════════════ */
+:root{
+  --paper:      #FFFFFF;   /* page ground        */
+  --card:       #FCFBF9;   /* card ground        */
+  --ink:        #14161A;   /* primary text       */
+  --ink-soft:   #6A6F78;   /* meta text          */
+  --ink-faint:  #9EA3AB;
+  --rule:       #DBD5CA;   /* hairlines          */
+  --accent:     #A8231F;   /* FS red  ← REPLACE  */
+  --accent-ink: #7C1A16;
+  --navy:       #1F3A5F;
+  --warn:       #B4762A;
+
+  /* ─ Franklin Street tokens — used ONLY by the collateral-library block below ─ */
+  --fs-paper:     #F7F8F7;
+  --fs-card:      #FFFFFF;
+  --fs-border:    #D9DCDB;
+  --fs-ink:       #3F4443;
+  --fs-ink-soft:  #6B7170;
+  --fs-ink-faint: #9AA19F;
+  --fs-blue:      #005670;
+  --fs-teal:      #00939D;
+  --fs-navy:      #003349;
+  --fs-green:     #C6D83B;
+  --fs-green-ink: #404715;
+  --fs-shadow-sm: 0 2px 10px -2px rgba(0,51,73,.12);
+  --fs-shadow-md: 0 16px 34px -12px rgba(0,51,73,.24);
+  --fs-radius:    14px;
+  --fs-radius-sm: 8px;
+  --fs-font:      Arial, Helvetica, sans-serif;
+
+  --f-display: 'Bodoni Moda', Georgia, serif;
+  --f-ui:      'Archivo', system-ui, sans-serif;
+  --f-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  --gut: clamp(20px, 4vw, 56px);
+  --maxw: 1340px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--f-ui); font-size:15px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+/* faint paper grain */
+body::before{
+  content:''; position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.045'/%3E%3C/svg%3E");
+}
+.wrap{position:relative; z-index:1; max-width:var(--maxw); margin:0 auto; padding:0 var(--gut)}
+img{display:block; max-width:100%}
+a{color:inherit; text-decoration:none}
+button{font:inherit; color:inherit; background:none; border:none; cursor:pointer}
+input{font:inherit}
+
+/* ════════════════════════════════════════════════════════════════════
+   2 · BANNER  —  unchanged from the live site.
+   Same hero image, same logo, same nav, same title.
+   ════════════════════════════════════════════════════════════════════ */
+.topbar{
+  position:sticky; top:0; z-index:40;
+  background:rgba(20,22,26,.94); backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+.topbar-in{
+  max-width:var(--maxw); margin:0 auto; padding:14px var(--gut);
+  display:flex; align-items:center; gap:36px;
+}
+.topbar img{height:26px; width:auto}
+.nav{display:flex; gap:26px; margin-left:auto; flex-wrap:wrap}
+.nav a{
+  font-size:11.5px; font-weight:600; letter-spacing:.16em; text-transform:uppercase;
+  color:rgba(255,255,255,.72); padding:4px 0; position:relative; transition:color .2s;
+}
+.nav a::after{
+  content:''; position:absolute; left:0; right:100%; bottom:0; height:1px;
+  background:var(--accent); transition:right .3s cubic-bezier(.2,.7,.2,1);
+}
+.nav a:hover{color:#fff}
+.nav a:hover::after,.nav a[aria-current]::after{right:0}
+.nav a[aria-current]{color:#fff}
+
+.hero{position:relative; min-height:clamp(300px,42vh,440px); display:flex; align-items:flex-end; overflow:hidden; background:#14161A}
+.hero-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.55}
+.hero::after{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(180deg,rgba(20,22,26,.30) 0%,rgba(20,22,26,.15) 35%,rgba(20,22,26,.92) 100%);
+}
+.hero-in{position:relative; z-index:2; width:100%; max-width:var(--maxw); margin:0 auto; padding:0 var(--gut) clamp(30px,5vh,54px)}
+.hero-mark{height:74px; width:auto; margin-bottom:20px; opacity:.95}
+.hero h1{
+  font-family:var(--f-display); font-weight:400; color:#fff;
+  font-size:clamp(42px,7.5vw,86px); line-height:.94; letter-spacing:-.02em;
+}
+.hero-sub{
+  margin-top:14px; font-family:var(--f-mono); font-size:11.5px; letter-spacing:.2em;
+  text-transform:uppercase; color:rgba(255,255,255,.62);
+}
+/* ══════════════════ end banner ══════════════════ */
+
+/* ════════════════════════════════════════════════════════════════════
+   COLLATERAL LIBRARY — FRANKLIN STREET REDESIGN — START
+   Everything below (controls bar, section headers, card grid) is safe
+   to copy/paste as one block into another page. It only touches the
+   classes listed here — it never touches .topbar/.nav/.hero/footer.
+   To add more PDFs: nothing here changes — just add rows to the ITEMS
+   array further down in the file.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── 3 · CONTROL BAR ─────────────────────────────────────────────── */
+.controls{
+  position:sticky; top:0; z-index:30;
+  background:color-mix(in srgb, var(--fs-paper) 90%, transparent);
+  backdrop-filter:blur(12px); border-bottom:1px solid var(--fs-border);
+  padding:20px 0 18px; margin-bottom:clamp(32px,5vh,56px);
+  font-family:var(--fs-font);
+}
+.searchrow{display:flex; align-items:center; gap:18px; flex-wrap:wrap}
+.search{
+  flex:1 1 300px; display:flex; align-items:center; gap:11px;
+  border-bottom:1.5px solid var(--fs-border); padding:0 2px 9px;
+  transition:border-color .2s;
+}
+.search:focus-within{border-color:var(--fs-teal)}
+.search svg{flex:0 0 auto; color:var(--fs-teal)}
+.search input{border:none; background:none; outline:none; width:100%; font-size:16px; font-family:var(--fs-font); color:var(--fs-ink); letter-spacing:-.005em}
+.search input::placeholder{color:var(--fs-ink-faint)}
+.kbd{
+  font-family:var(--fs-font); font-size:10px; color:var(--fs-ink-faint);
+  border:1px solid var(--fs-border); border-radius:4px; padding:2px 7px; flex:0 0 auto;
+}
+.count{font-family:var(--fs-font); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--fs-ink-soft); white-space:nowrap}
+.count b{color:var(--fs-teal); font-weight:700}
+
+.filters{display:flex; flex-direction:column; gap:10px; margin-top:16px}
+.frow{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap}
+.flabel{
+  font-family:var(--fs-font); font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--fs-ink-faint); width:76px; flex:0 0 auto; padding-top:5px;
+}
+.chips{display:flex; gap:8px; flex-wrap:wrap}
+.chip{
+  font-family:var(--fs-font); font-size:12.5px; font-weight:600; letter-spacing:.01em;
+  padding:6px 14px; border:1px solid var(--fs-border); border-radius:100px;
+  color:var(--fs-ink-soft); background:var(--fs-card);
+  transition:border-color .18s, color .18s, background .18s, box-shadow .18s;
+}
+.chip:hover{border-color:var(--fs-teal); color:var(--fs-blue); box-shadow:0 0 0 3px rgba(0,147,157,.12)}
+.chip[aria-pressed="true"]{background:var(--fs-blue); border-color:var(--fs-blue); color:#fff}
+.chip.reset{border-style:dashed; color:var(--fs-blue); border-color:color-mix(in srgb,var(--fs-blue) 40%,transparent); background:transparent}
+
+/* ── 4 · SECTIONS + GRID ─────────────────────────────────────────── */
+.section{margin-bottom:clamp(46px,7vh,84px); font-family:var(--fs-font)}
+.section[hidden]{display:none}
+.shead{
+  display:flex; align-items:baseline; gap:16px;
+  border-bottom:2px solid var(--fs-blue); padding-bottom:12px; margin-bottom:28px;
+}
+.snum{font-family:var(--fs-font); font-weight:700; font-size:12px; color:var(--fs-teal); letter-spacing:.12em; padding-top:5px}
+.shead h2{
+  font-family:var(--fs-font); font-weight:700; font-size:clamp(20px,2.6vw,28px);
+  letter-spacing:.04em; text-transform:uppercase; line-height:1; color:var(--fs-blue);
+}
+.stally{margin-left:auto; font-family:var(--fs-font); font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--fs-ink-faint); padding-top:5px}
+
+.grid{
+  display:grid; gap:clamp(20px,2.4vw,28px);
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+}
+
+/* ── 5 · CARD ────────────────────────────────────────────────────── */
+.card{
+  display:flex; flex-direction:column; background:var(--fs-card);
+  border:1px solid var(--fs-border); border-radius:var(--fs-radius); overflow:hidden; position:relative;
+  box-shadow:var(--fs-shadow-sm);
+  transition:transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s, border-color .28s;
+  animation:rise .5s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes rise{from{opacity:0; transform:translateY(14px)} to{opacity:1; transform:none}}
+.card:hover{transform:translateY(-3px); border-color:var(--fs-teal); box-shadow:var(--fs-shadow-md)}
+.card.nolink{background:var(--fs-paper); border-style:dashed; border-color:color-mix(in srgb,var(--fs-ink-faint) 55%,var(--fs-border)); box-shadow:none}
+.card.nolink:hover{transform:none; box-shadow:none}
+
+.thumb{position:relative; aspect-ratio:4/3; overflow:hidden; background:transparent; display:flex; align-items:center; justify-content:center; padding:14px}
+.thumb img{
+  width:100%; height:100%; object-fit:contain; object-position:center;
+  filter:drop-shadow(0 6px 14px rgba(0,51,73,.18));
+  transition:transform .55s cubic-bezier(.22,1,.36,1), filter .3s;
+}
+.card:hover .thumb img{transform:scale(1.03)}
+.card.nolink .thumb img{filter:grayscale(1) opacity(.4)}
+
+.tag{
+  position:absolute; top:10px; left:10px;
+  font-family:var(--fs-font); font-weight:700; font-size:9.5px; letter-spacing:.1em; text-transform:uppercase;
+  background:var(--fs-navy); color:#fff; padding:5px 10px; border-radius:var(--fs-radius-sm);
+}
+.tag.warn{background:var(--fs-ink-soft)}
+.star{
+  position:absolute; top:10px; right:10px; color:var(--fs-green-ink); font-size:10px; font-weight:700;
+  letter-spacing:.06em; text-transform:uppercase; background:var(--fs-green); padding:4px 9px 3px;
+  border-radius:var(--fs-radius-sm); line-height:1.4;
+}
+
+.body{padding:16px 17px 18px; display:flex; flex-direction:column; flex:1; gap:9px; font-family:var(--fs-font)}
+.body h3{font-size:15px; font-weight:700; line-height:1.3; letter-spacing:-.005em; color:var(--fs-ink)}
+.meta{
+  font-family:var(--fs-font); font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--fs-ink-faint); display:flex; gap:7px; flex-wrap:wrap;
+}
+.meta span:not(:last-child)::after{content:' ·'; color:var(--fs-border)}
+.go{
+  margin-top:auto; padding-top:12px; border-top:1px solid var(--fs-border);
+  display:flex; align-items:center; justify-content:space-between;
+  font-family:var(--fs-font); font-size:11.5px; font-weight:700; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--fs-teal); transition:color .2s;
+}
+.card:hover .go{color:var(--fs-blue)}
+.go .arw{transition:transform .28s cubic-bezier(.22,1,.36,1)}
+.card:hover .go .arw{transform:translateX(5px)}
+.go.dead{color:var(--fs-ink-faint)}
+.card.nolink:hover .go.dead{color:var(--fs-ink-faint)}
+
+.empty{
+  text-align:center; padding:clamp(60px,12vh,120px) 20px;
+  border:1px dashed var(--fs-border); border-radius:var(--fs-radius); font-family:var(--fs-font);
+}
+.empty p{font-weight:700; font-size:20px; letter-spacing:.03em; text-transform:uppercase; color:var(--fs-blue); margin-bottom:8px}
+.empty small{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--fs-ink-faint)}
+
+/* ════════════════════ COLLATERAL LIBRARY REDESIGN — END ════════════════════ */
+
+/* ── 6 · FOOTER ──────────────────────────────────────────────────── */
+footer{background:var(--ink); color:rgba(255,255,255,.62); margin-top:clamp(50px,9vh,110px); padding:44px 0 38px}
+.fin{max-width:var(--maxw); margin:0 auto; padding:0 var(--gut); display:flex; align-items:center; gap:30px; flex-wrap:wrap}
+footer img{height:22px; width:auto}
+footer .fnav{display:flex; gap:22px; margin-left:auto; flex-wrap:wrap}
+footer .fnav a{font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; transition:color .2s}
+footer .fnav a:hover{color:#fff}
+footer small{font-family:var(--f-mono); font-size:10px; letter-spacing:.1em; width:100%; color:rgba(255,255,255,.34); margin-top:6px}
+
+@media (max-width:700px){
+  .flabel{width:100%}
+  .controls{top:0}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:16px}
+  .kbd{display:none}
+  .shead h2{letter-spacing:.02em}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none !important; transition:none !important}}
+
+/* ── Sideways-scrolling rows: page height stays fixed as packages are added ── */
+.grid{
+  display:grid; grid-template-columns:none; grid-auto-flow:column;
+  grid-auto-columns:clamp(200px,22vw,250px);
+  overflow-x:auto; overscroll-behavior-x:contain; scroll-snap-type:x proximity;
+  padding:6px 2px 16px; scrollbar-width:thin; scrollbar-color:var(--fs-border) transparent;
+}
+.grid > .card{scroll-snap-align:start}
+.snav{display:flex; gap:6px; padding-top:2px}
+.sbtn{
+  width:30px; height:30px; border-radius:50%; border:1px solid var(--fs-border); background:var(--fs-card);
+  color:var(--fs-blue); font-size:14px; line-height:1; display:grid; place-items:center;
+  transition:border-color .18s, background .18s, color .18s;
+}
+.sbtn:hover{border-color:var(--fs-teal); background:var(--fs-blue); color:#fff}
+.sbtn:disabled{opacity:.35; pointer-events:none}
+@media (max-width:700px){ .grid{grid-auto-columns:62vw; grid-template-columns:none} .snav{display:none} }
+</style>
+</head>
+<body>
+
+
+<div class="controls">
+  <div class="wrap">
+    <div class="searchrow">
+      <label class="search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5"/></svg>
+        <input id="q" type="search" placeholder="Search collateral — coverage type, market, program…" autocomplete="off">
+        <span class="kbd">/</span>
+      </label>
+    </div>
+    <div class="filters" id="filters"></div>
+  </div>
+</div>
+
+<main class="wrap" id="results"></main>
+
+
+<script>
+/* ╔══════════════════════════════════════════════════════════════════╗
+   ║  ADD CONTENT HERE — this is the only block that changes.         ║
+   ║                                                                  ║
+   ║  Copy a line, paste it, edit it. Fields:                         ║
+   ║    t      title                                                  ║
+   ║    s      section  → "Proposals & Custom Pitches" | "Brochures & ║
+   ║                       Decks" | "Templates" | "Flyers"            ║
+   ║    type   OM · BOV · Pitch · Deck · Brochure · Template · Flyer  ║
+   ║    prop   Retail · Multifamily · Land · Medical · Education ·    ║
+   ║           Capital Advisory · Mixed                               ║
+   ║    mkt    market, e.g. "Tampa, FL"   (optional, "" if unknown)   ║
+   ║    url    PDF / Publuu link          ("" = flagged as missing)   ║
+   ║    img    thumbnail URL                                          ║
+   ║    star   true to pin as featured    (optional)                  ║
+   ╚══════════════════════════════════════════════════════════════════╝ */
+
+
+let ITEMS = [];
+
+/* ══════════ nothing below here needs editing ══════════ */
+
+const SECTIONS = ["Proposals & Custom Pitches","Brochures & Decks","Templates","Flyers","Social Media"];
+const state = {q:"", type:"All", prop:"All"};
+const uniq  = k => ["All", ...[...new Set(ITEMS.map(i=>i[k]).filter(Boolean))].sort()];
+const esc   = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---- filter chips ---- */
+function buildFilters(){
+  const rows = [["Type","type",uniq("type")]];
+  document.getElementById("filters").innerHTML = rows.map(([label,key,vals]) => `
+    <div class="frow">
+      <span class="flabel">${label}</span>
+      <div class="chips">${vals.map(v =>
+        `<button class="chip" data-k="${key}" data-v="${esc(v)}" aria-pressed="${state[key]===v}">${esc(v)}</button>`
+      ).join("")}</div>
+    </div>`).join("") + `
+    <div class="frow"><span class="flabel"></span>
+      <div class="chips"><button class="chip reset" id="reset">Clear all</button></div>
+    </div>`;
+}
+
+/* ---- matching ---- */
+const match = i => {
+  if(state.type !== "All" && i.type !== state.type) return false;
+  if(state.prop !== "All" && i.prop !== state.prop) return false;
+  if(!state.q) return true;
+  return [i.t,i.type,i.prop,i.mkt,i.s].join(" ").toLowerCase().includes(state.q);
+};
+
+/* ---- card ---- */
+function card(i, n){
+  const dead = !i.url;
+  return `
+  <${dead ? "div" : "a"} class="card${dead?" nolink":""}"${dead?"":` href="${esc(i.url)}" target="_blank" rel="noopener"`}
+     style="animation-delay:${Math.min(n,14)*35}ms">
+    <div class="thumb">
+      <img src="${esc(i.img)}" alt="${esc(i.t)} cover" loading="lazy">
+      <span class="tag${dead?" warn":""}">${dead ? "Link needed" : esc(i.type)}</span>
+      ${i.star && !dead ? '<span class="star" title="Featured">★</span>' : ""}
+    </div>
+    <div class="body">
+      <h3>${esc(i.t)}</h3>
+      <p class="meta">
+        <span>${esc(i.prop)}</span>${i.mkt ? `<span>${esc(i.mkt)}</span>` : ""}${dead ? `<span>${esc(i.type)}</span>` : ""}
+      </p>
+      <p class="go${dead?" dead":""}">${dead ? "Awaiting file" : "View PDF"}<span class="arw">${dead ? "—" : "→"}</span></p>
+    </div>
+  </${dead ? "div" : "a"}>`;
+}
+
+/* ---- render ---- */
+function render(){
+  const hits = ITEMS.filter(match);
+  const missing = ITEMS.filter(i=>!i.url).length;
+
+  if(!hits.length){
+    document.getElementById("results").innerHTML =
+      `<div class="empty"><p>Nothing matches.</p><small>Try clearing a filter</small></div>`;
+    return;
+  }
+  let n = 0;
+  document.getElementById("results").innerHTML = SECTIONS.map((s,si) => {
+    const rows = hits.filter(i=>i.s===s);
+    if(!rows.length) return "";
+    return `<section class="section">
+      <div class="shead">
+        <h2>${esc(s)}</h2>
+        <span class="stally">${rows.length} item${rows.length>1?"s":""}</span><span class="snav"><button class="sbtn" data-dir="-1" aria-label="Scroll left">&larr;</button><button class="sbtn" data-dir="1" aria-label="Scroll right">&rarr;</button></span>
+      </div>
+      <div class="grid">${rows.map(i=>card(i,n++)).join("")}</div>
+    </section>`;
+  }).join("");
+}
+
+/* ---- events ---- */
+document.getElementById("q").addEventListener("input", e => {
+  state.q = e.target.value.trim().toLowerCase(); render();
+});
+document.getElementById("filters").addEventListener("click", e => {
+  const c = e.target.closest(".chip"); if(!c) return;
+  if(c.id === "reset"){ state.type = state.prop = "All"; state.q = ""; document.getElementById("q").value = ""; }
+  else { state[c.dataset.k] = c.dataset.v; }
+  buildFilters(); render();
+});
+document.addEventListener("keydown", e => {
+  if(e.key === "/" && document.activeElement.id !== "q"){ e.preventDefault(); document.getElementById("q").focus(); }
+  if(e.key === "Escape" && document.activeElement.id === "q"){ document.getElementById("q").blur(); }
+});
+
+/* ---- sideways row arrows ---- */
+function syncArrows(){
+  document.querySelectorAll(".section").forEach(sec => {
+    const g = sec.querySelector(".grid"), [l, r] = sec.querySelectorAll(".sbtn");
+    if(!g || !l) return;
+    l.disabled = g.scrollLeft < 4;
+    r.disabled = g.scrollLeft + g.clientWidth >= g.scrollWidth - 4;
+  });
+}
+document.getElementById("results").addEventListener("click", e => {
+  const b = e.target.closest(".sbtn"); if(!b) return;
+  const g = b.closest(".section").querySelector(".grid");
+  g.scrollBy({left: Number(b.dataset.dir) * g.clientWidth * 0.85, behavior: "smooth"});
+});
+document.getElementById("results").addEventListener("scroll", syncArrows, true);
+new MutationObserver(syncArrows).observe(document.getElementById("results"), {childList: true});
+window.addEventListener("resize", syncArrows);
+
+/* ---- packages live in items.json (edit that file, not this page) ---- */
+fetch("items.json", {cache: "no-cache"})
+  .then(r => r.json())
+  .then(data => { ITEMS = data; buildFilters(); render(); })
+  .catch(() => {
+    document.getElementById("results").innerHTML =
+      `<div class="empty"><p>Couldn't load packages.</p><small>Refresh the page to try again</small></div>`;
+  });
+</script>
+<footer style="margin-top:80px; padding:40px 0; border-top:1px solid var(--fs-border); text-align:center; font-family:var(--fs-font); font-size:13px; color:var(--fs-ink-soft)">
+Designed by Anna Myers
+</footer>
+</body>
+</html>
